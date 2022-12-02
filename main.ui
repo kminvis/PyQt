@@ -20,8 +20,8 @@
    <widget class="QPushButton" name="predictionButton">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>720</y>
+      <x>890</x>
+      <y>0</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -41,30 +41,30 @@
     </property>
     <layout class="QVBoxLayout" name="Layout"/>
    </widget>
-   <widget class="QLabel" name="status">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>56</width>
-      <height>12</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>메인화면</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="tradeButton">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>720</y>
+      <x>990</x>
+      <y>0</y>
       <width>75</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>매매하기</string>
+     <string>자동매매</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="status">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>0</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>메인창</string>
     </property>
    </widget>
   </widget>
