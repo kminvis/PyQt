@@ -8,30 +8,49 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from fbprophet import Prophet
 import yfinance as yf
 
-windowForm = uic.loadUiType("chart.ui")[0]
+MainForm = uic.loadUiType("main.ui")[0]
+ChartForm = uic.loadUiType("chart.ui")[0]
+TradeForm = uic.loadUiType("trade.ui")[0]
 
-class MyWindow(QMainWindow, windowForm):
+class MyWindow(QMainWindow, MainForm):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        
+        self.predictionButton.clicked.connect(self.prediction)
+        self.tradeButton.clicked.connect(self.trade)
 
+    def prediction(self):
+        if self.status.text() != "차트예측":
+            for i in range(self.Layout.count()):
+                self.Layout.itemAt(i).widget().deleteLater()
+            self.Layout.addWidget(predictionWindow())
+            self.status.setText("차트예측")
+
+    def trade(self):
+        if self.status.text() != "매매":
+            for i in range(self.Layout.count()):
+                self.Layout.itemAt(i).widget().deleteLater()
+            self.Layout.addWidget(tradeWindow())
+            self.status.setText("매매")
+
+
+class predictionWindow(QWidget, ChartForm):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        
         self.fig = plt.Figure()
         self.prediction_canvas = FigureCanvas(self.fig)
         self.prediction_verticalLayout.addWidget(self.prediction_canvas)
+        
+        self.predictionButton.clicked.connect(self.chart)
 
-        self.pushButton.clicked.connect(self.pushButtonClicked)
-
-        self.timer = QBasicTimer()
-        self.step = 0
-
-    def pushButtonClicked(self):
+    def chart(self):
         self.label_3.clear()
         self.label_5.clear()
         self.label_4.setText("로딩중")
         try:
-            self.prediction_canvas.close()
-            self.prediction_canvas = FigureCanvas(self.fig)
-            self.prediction_verticalLayout.addWidget(self.prediction_canvas)
             self.progressBar.setValue(5)
             code = self.lineEdit.text()
             code = code.upper()
@@ -69,6 +88,12 @@ class MyWindow(QMainWindow, windowForm):
             self.label_5.clear()
             self.label_4.clear()
             self.label_3.setText("티커명 재확인 필요")
+
+class tradeWindow(QWidget, TradeForm):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
